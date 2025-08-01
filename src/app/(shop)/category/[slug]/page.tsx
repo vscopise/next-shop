@@ -3,9 +3,11 @@ import { initialData } from "@/seed/seed";
 //import { notFound } from "next/navigation";
 
 interface Props {
-  params: {
+  /* params: {
     slug: string;
-  };
+  }; */
+
+  params: Promise<{ slug: string }>; 
 }
 
 const seedProducts = initialData.products;
