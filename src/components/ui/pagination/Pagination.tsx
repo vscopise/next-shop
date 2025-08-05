@@ -14,10 +14,6 @@ export const Pagination = ({ totalPages }: Props) => {
   const searchParams = useSearchParams();
   const pageString = searchParams.get('page') ?? 1;
   const currentPage = isNaN(+pageString) ? 1 : +pageString;
-  //const currentPage =
-  //  Number(searchParams.get("page") ? searchParams.get("page") : 1) ?? 1;
-
-  //console.log(pathname, searchParams, currentPage);
 
   const paginationNumbers = generatePaginationNumbers(currentPage, totalPages);
 
