@@ -105,7 +105,7 @@ interface Tag {
   slug: string;
 }
 
-interface Image {
+export interface Image {
   id: number;
   date_created: string;
   date_created_gmt: string;

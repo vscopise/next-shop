@@ -23,6 +23,125 @@ interface SeedData {
 export const initialData: SeedData = {
   products: [
     {
+        "id": 159,
+        "name": "Producto sencillo",
+        "slug": "producto-sencillo",
+        "permalink": "https://wp.lr.uy/producto/producto-sencillo/",
+        "date_created": "2025-08-01T21:17:16",
+        "date_created_gmt": "2025-08-02T00:17:16",
+        "date_modified": "2025-08-01T21:17:16",
+        "date_modified_gmt": "2025-08-02T00:17:16",
+        "type": "simple",
+        "status": "publish",
+        "featured": false,
+        "catalog_visibility": "visible",
+        "description": "",
+        "short_description": "<p>Dual Connectivity for Modern &amp; Legacy Systems – Combines 10BASE-T1S Single Pair Ethernet with RS485 support, enabling seamless communication between new and existing</p>\n",
+        "sku": "",
+        "price": "115",
+        "regular_price": "120",
+        "sale_price": "115",
+        "date_on_sale_from": null,
+        "date_on_sale_from_gmt": null,
+        "date_on_sale_to": null,
+        "date_on_sale_to_gmt": null,
+        "on_sale": true,
+        "purchasable": true,
+        "total_sales": 0,
+        "virtual": false,
+        "downloadable": false,
+        "downloads": [],
+        "download_limit": -1,
+        "download_expiry": -1,
+        "external_url": "",
+        "button_text": "",
+        "tax_status": "taxable",
+        "tax_class": "",
+        "manage_stock": false,
+        "stock_quantity": null,
+        "backorders": "no",
+        "backorders_allowed": false,
+        "backordered": false,
+        "low_stock_amount": null,
+        "sold_individually": false,
+        "weight": "",
+        "dimensions": {
+            "length": "",
+            "width": "",
+            "height": ""
+        },
+        "shipping_required": true,
+        "shipping_taxable": true,
+        "shipping_class": "",
+        "shipping_class_id": 0,
+        "reviews_allowed": true,
+        "average_rating": "0.00",
+        "rating_count": 0,
+        "upsell_ids": [],
+        "cross_sell_ids": [],
+        "parent_id": 0,
+        "purchase_note": "",
+        "categories": [
+            {
+                "id": 16,
+                "name": "Accessories",
+                "slug": "accessories"
+            }
+        ],
+        "brands": [],
+        "tags": [],
+        "images": [
+            {
+                "id": 129,
+                "date_created": "2025-07-30T10:52:28",
+                "date_created_gmt": "2025-07-30T16:52:28",
+                "date_modified": "2025-07-30T10:52:28",
+                "date_modified_gmt": "2025-07-30T16:52:28",
+                "src": "https://wp.lr.uy/wp-content/uploads/2025/07/Shirt-1-back.jpg",
+                "name": "Shirt-1-back.jpg",
+                "alt": ""
+            }
+        ],
+        "attributes": [],
+        "default_attributes": [],
+        "variations": [],
+        "grouped_products": [],
+        "menu_order": 0,
+        "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;120,00</bdi></span></del> <span class=\"screen-reader-text\">El precio original era: &#036;&nbsp;120,00.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\">&#36;</span>&nbsp;115,00</bdi></span></ins><span class=\"screen-reader-text\">El precio actual es: &#036;&nbsp;115,00.</span>",
+        "related_ids": [
+            69,
+            62,
+            63,
+            64
+        ],
+        "meta_data": [],
+        "stock_status": "instock",
+        "has_options": false,
+        "post_password": "",
+        "global_unique_id": "",
+        "_links": {
+            "self": [
+                {
+                    "href": "https://wp.lr.uy/wp-json/wc/v3/products/159",
+                    "targetHints": {
+                        "allow": [
+                            "GET",
+                            "POST",
+                            "PUT",
+                            "PATCH",
+                            "DELETE"
+                        ]
+                    }
+                }
+            ],
+            "collection": [
+                {
+                    "href": "https://wp.lr.uy/wp-json/wc/v3/products"
+                }
+            ]
+        }
+    },
+    {
       id: 138,
       name: "Dat Divi Engine Life Crop-top (3-Tone)",
       slug: "dat-divi-engine-life-crop-top-3-tone",
@@ -65,7 +184,7 @@ export const initialData: SeedData = {
       backorders_allowed: false,
       backordered: false,
       low_stock_amount: null,
-      sold_individually: false,
+      sold_individually: true,
       weight: "",
       dimensions: {
         length: "",

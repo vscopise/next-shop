@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: 'wp.lr.uy'
             },
+            {
+                protocol: 'http',
+                hostname: 'wp.lr.uy'
+            },
             
         ]
     }

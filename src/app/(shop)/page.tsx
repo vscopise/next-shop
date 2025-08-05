@@ -1,14 +1,33 @@
-import { ProductGrid } from "@/components";
+import { getPaginationProducts, getAllProducts } from "@/actions";
+import { Pagination, ProductGrid } from "@/components";
 import { titleFont } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
+import { redirect } from "next/navigation";
 
-const products = initialData.products;
+interface Props {
+  searchParams: Promise<{ page: string; take: string }>;
+}
 
-export default function Home() {
+export default async function Home({ searchParams }: Props) {
+  const { page, take } = await searchParams;
+
+  const actualPage = page ? parseInt(page) : 1;
+  const actualTake = take ? parseInt(take) : 12;
+
+  const products = await getPaginationProducts({
+    page: actualPage,
+    take: actualTake,
+  });
+  const allProducts = await getAllProducts();
+  const totalPages = allProducts.length;
+
+  if (products.length === 0) redirect("/");
+
   return (
     <>
       <h1 className={`${titleFont.className}`}>Todos los productos</h1>
       <ProductGrid products={products} />
+
+      <Pagination totalPages={totalPages} />
     </>
   );
 }
