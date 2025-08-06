@@ -1,7 +1,6 @@
-import { getPaginationProducts } from "@/actions";
+import { getProducts } from "@/actions";
 import { Pagination, ProductGrid } from "@/components";
 import { titleFont } from "@/config/fonts";
-//import { redirect } from "next/navigation";
 
 interface Props {
   searchParams: Promise<{ page: string; take: string }>;
@@ -12,16 +11,11 @@ export default async function Home({ searchParams }: Props) {
 
   const actualPage = page ? parseInt(page) : 1;
   const actualTake = take ? parseInt(take) : 12;
-  
 
-  const {products, totalPages, currentPage} = await getPaginationProducts(
-    actualPage,
-    actualTake
-  );
-  //const allProducts = await getAllProducts();
-  //const totalPages = allProducts.length;
-
-  //if (products.length === 0) redirect("/");
+  const { products, totalPages } = await getProducts({
+    page: actualPage,
+    perPage: actualTake,
+  });
 
   return (
     <>

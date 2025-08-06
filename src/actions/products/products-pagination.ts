@@ -2,10 +2,10 @@
 
 import { Product } from "@/interfaces";
 
-/* interface PaginationOptions {
+interface PaginationOptions {
   page?: number;
-  take?: number;
-} */
+  perPage?: number;
+}
 
 interface ProductsResponse {
   products: Product[];
@@ -13,23 +13,23 @@ interface ProductsResponse {
   currentPage: number;
 }
 
-export async function getPaginationProducts (
-  page:number = 1,
-  perPage:number = 12,
-): Promise<ProductsResponse> {
+export async function getProducts({
+  page = 1,
+  perPage = 10,
+}: PaginationOptions): Promise<ProductsResponse> {
+  try {
+    const url = `${process.env.SERVER_URL}/products`;
+    const consumerKey = process.env.WC_CONSUMER_KEY!;
+    const consumerSecret = process.env.WC_CONSUMER_SECRET!;
+    const credentials = Buffer.from(
+      `${consumerKey}:${consumerSecret}`
+    ).toString("base64");
 
-  const baseUrl = "https://wp.lr.uy/wp-json/wc/v3/products/";
-  const consumerKey = process.env.WC_CONSUMER_KEY!;
-  const consumerSecret = process.env.WC_CONSUMER_SECRET!;
-  const credentials = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-    "base64"
-  );
+    if (isNaN(Number(page))) page = 1;
+    if (page < 1) page = 1;
 
-  if (isNaN(Number(page))) page = 1;
-  if (page < 1) page = 1;
-
-  //try {
-    const response = await fetch(`${baseUrl}?page=${page}&per_page=${perPage}`, {
+    console.log(`${url}?page=${page}&per_page=${perPage}`);
+    const response = await fetch(`${url}?page=${page}&per_page=${perPage}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${credentials}`,
@@ -40,21 +40,24 @@ export async function getPaginationProducts (
     if (!response.ok) {
       throw new Error(`WooCommerce API error ${response.status}`);
     }
-    
-    //const totalProducts = parseInt(response.headers.get("X-WP-Total") || "0", 10);
-    //
-    const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '0', 10);
+
+    const totalPages = parseInt(
+      response.headers.get("X-WP-TotalPages") || "0",
+      10
+    );
     const products = await response.json();
-    
-    
 
     return {
       products: products,
       totalPages: totalPages,
       currentPage: page,
     };
-/*   } catch (err) {
+  } catch (err) {
     console.error("WooCommerce fetch error:", err);
-    //return [];
-  } */
-};
+    return {
+      products: [],
+      totalPages: 0,
+      currentPage: 0,
+    };
+  }
+}
