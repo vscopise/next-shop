@@ -15,11 +15,11 @@ export const Pagination = ({ totalPages }: Props) => {
   const pageString = searchParams.get('page') ?? 1;
   const currentPage = isNaN(+pageString) ? 1 : +pageString;
 
-  console.log({currentPage, totalPages})
+  //console.log({currentPage, totalPages})
 
   const paginationNumbers = generatePaginationNumbers(currentPage, totalPages);
 
-  console.log(paginationNumbers);
+  //console.log(paginationNumbers);
 
   const createPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
