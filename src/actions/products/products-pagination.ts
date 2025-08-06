@@ -17,7 +17,7 @@ export async function getProducts({
   page = 1,
   perPage = 10,
 }: PaginationOptions): Promise<ProductsResponse> {
-  try {
+  //try {
     const url = `${process.env.SERVER_URL}products`;
     const consumerKey = process.env.WC_CONSUMER_KEY!;
     const consumerSecret = process.env.WC_CONSUMER_SECRET!;
@@ -47,17 +47,19 @@ export async function getProducts({
     );
     const products = await response.json();
 
+    console.log({products, totalPages, page})
+
     return {
       products: products,
       totalPages: totalPages,
       currentPage: page,
     };
-  } catch (err) {
+  /* } catch (err) {
     console.error("WooCommerce fetch error:", err);
     return {
       products: [],
       totalPages: 0,
       currentPage: 0,
     };
-  }
+  } */
 }
