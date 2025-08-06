@@ -28,8 +28,8 @@ export async function getProducts({
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
 
-    //console.log(`${url}?page=${page}&per_page=${perPage}`);
-    const response = await fetch(`${url}?page=${page}&per_page=${perPage}`, {
+    console.log(`${url}?page=${page}&per_page=${perPage}`);
+    const response = await fetch(`${url}/?page=${page}&per_page=${perPage}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${credentials}`,
