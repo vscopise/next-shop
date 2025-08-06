@@ -18,7 +18,7 @@ export async function getProducts({
   perPage = 10,
 }: PaginationOptions): Promise<ProductsResponse> {
   try {
-    const url = `${process.env.SERVER_URL}/products`;
+    const url = `${process.env.SERVER_URL}products`;
     const consumerKey = process.env.WC_CONSUMER_KEY!;
     const consumerSecret = process.env.WC_CONSUMER_SECRET!;
     const credentials = Buffer.from(
