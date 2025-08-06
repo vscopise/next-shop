@@ -12,6 +12,7 @@ interface ProductsResponse {
   totalPages: number;
   currentPage: number;
 }
+
 export async function getProducts({
   page = 1,
   perPage = 10,

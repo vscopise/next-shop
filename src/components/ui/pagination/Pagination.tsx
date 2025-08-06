@@ -9,6 +9,7 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 interface Props {
   totalPages: number;
 }
+
 export const Pagination = ({ totalPages }: Props) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
