@@ -14,10 +14,10 @@ export default async function Home({ searchParams }: Props) {
   const actualTake = take ? parseInt(take) : 12;
   
 
-  const {products, totalPages} = await getPaginationProducts({
-    page: actualPage,
-    take: actualTake,
-  });
+  const {products, totalPages, currentPage} = await getPaginationProducts(
+    actualPage,
+    actualTake
+  );
   //const allProducts = await getAllProducts();
   //const totalPages = allProducts.length;
 
