@@ -2,23 +2,24 @@
 
 import { Product } from "@/interfaces";
 
-interface PaginationOptions {
+/* interface PaginationOptions {
   page?: number;
   perPage?: number;
-}
+} */
 
 interface ProductsResponse {
   products: Product[];
   totalPages: number;
-  currentPage: number;
+  //currentPage: number;
 }
 
-export async function getProducts({
-  page = 1,
-  perPage = 10,
-}: PaginationOptions): Promise<ProductsResponse> {
-  //try {
-    const url = `${process.env.SERVER_URL}products`;
+export async function getProducts(
+  page: number = 1,
+  perPage: number = 10
+): Promise<ProductsResponse> {
+  try {
+    //const url = `${process.env.WC_API_URL}/products`;
+    const url = new URL(`${process.env.WC_API_URL}/products`);
     const consumerKey = process.env.WC_CONSUMER_KEY!;
     const consumerSecret = process.env.WC_CONSUMER_SECRET!;
     const credentials = Buffer.from(
@@ -28,7 +29,7 @@ export async function getProducts({
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
 
-    console.log(`${url}?page=${page}&per_page=${perPage}`);
+    console.log(`${url}/?page=${page}&per_page=${perPage}`);
     const response = await fetch(`${url}/?page=${page}&per_page=${perPage}`, {
       method: "GET",
       headers: {
@@ -41,25 +42,22 @@ export async function getProducts({
       throw new Error(`WooCommerce API error ${response.status}`);
     }
 
-    const totalPages = parseInt(
-      response.headers.get("X-WP-TotalPages") || "0",
-      10
-    );
+    const totalPages = Number(response.headers.get("x-wp-totalpages") || "0");
     const products = await response.json();
 
-    console.log({products, totalPages, page})
+    console.log({ products, totalPages });
 
     return {
       products: products,
       totalPages: totalPages,
-      currentPage: page,
+      //currentPage: page,
     };
-  /* } catch (err) {
+  } catch (err) {
     console.error("WooCommerce fetch error:", err);
     return {
       products: [],
       totalPages: 0,
-      currentPage: 0,
+      //currentPage: 0,
     };
-  } */
+  }
 }
