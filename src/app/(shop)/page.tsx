@@ -12,10 +12,7 @@ export default async function Home({ searchParams }: Props) {
   const actualPage = page ? parseInt(page) : 1;
   const actualTake = take ? parseInt(take) : 12;
 
-  const { products, totalPages } = await getProducts({
-    page: actualPage,
-    perPage: actualTake,
-  });
+  const { products, totalPages } = await getProducts(actualPage, actualTake);
 
   return (
     <>
