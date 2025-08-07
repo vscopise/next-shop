@@ -7,7 +7,7 @@ interface ProductsResponse {
   totalPages: number;
 }
 
-export async function getProducts(
+export async function getPaginatedProducts(
   page: number = 1,
   perPage: number = 10
 ): Promise<ProductsResponse> {

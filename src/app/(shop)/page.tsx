@@ -1,4 +1,4 @@
-import { getProducts } from "@/actions";
+import { getPaginatedProducts } from "@/actions";
 import { Pagination, ProductGrid } from "@/components";
 import { titleFont } from "@/config/fonts";
 import { getIntValue } from "@/utils";
@@ -13,7 +13,7 @@ export default async function Home({ searchParams }: Props) {
   const actualPage = getIntValue(page, 1);
   const actualTake = getIntValue(take, 10);
 
-  const { products, totalPages } = await getProducts(actualPage, actualTake);
+  const { products, totalPages } = await getPaginatedProducts(actualPage, actualTake);
 
   return (
     <>
