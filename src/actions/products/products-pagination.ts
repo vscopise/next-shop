@@ -11,7 +11,7 @@ interface ProductsResponse {
   products: Product[];
   totalPages: number;
   //currentPage: number;
-}
+} 
 
 export async function getProducts(
   page: number = 1,
@@ -40,7 +40,7 @@ export async function getProducts(
 
   if (!response.ok) {
     //throw new Error(`WooCommerce API error ${response.status}`);
-    return undefined;
+    return {products:[], totalPages: 0};
   }
   const products = await response.json();
   const totalPages = Number(response.headers.get("x-wp-totalpages") || "0");
