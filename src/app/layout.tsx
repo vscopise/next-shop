@@ -4,7 +4,10 @@ import { geistMono, geistSans } from "@/config/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Next Shop",
+  title: {
+    template: '%s - Next Shop',
+    default: 'Home - Next Shop'
+  },
   description: "Hecho con amor por Vicente",
 };
 

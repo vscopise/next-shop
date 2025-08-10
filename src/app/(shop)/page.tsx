@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { getPaginatedProducts } from "@/actions";
 import { Pagination, ProductGrid } from "@/components";
 import { titleFont } from "@/config/fonts";

@@ -2,6 +2,12 @@ export * from './product/quantity-selector/QuantitySelector';
 export * from './product/product-price/ProductPrice';
 export * from './product/slideshow/ProductSlideshow';
 export * from './product/slideshow/ProductMobileSlideshow';
+//export * from './product/product-stock/ProductStock';
+export * from './product/product-stock/ProductStock';
+export * from './product/updated-product-details/updatedProductDetails';
+export * from './product/add-to-cart/AddToCart';
+export * from './product/product-categories/ProductCategories';
+export * from './product/prtoduct-tags/ProductTags';
 
 export * from './products/product-grid/ProductGrid';
 export * from './products/product-grid/ProductGridItem';

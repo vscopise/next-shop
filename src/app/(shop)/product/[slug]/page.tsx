@@ -1,55 +1,82 @@
-import { ProductPrice, QuantitySelector, ProductSlideshow, ProductMobileSlideshow } from "@/components";
+export const revalidate = 604800; // 7 días
+
+import { getProductBySlug } from "@/actions";
+import {
+  ProductSlideshow,
+  ProductMobileSlideshow,
+  //ProductStock,
+  UpdatedProductDetails,
+} from "@/components";
 import { titleFont } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
+import { Metadata } from "next";
+//import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+
+  const product = await getProductBySlug(slug);
+
+  return {
+    title: product!.name,
+    description: product!.short_description,
+    openGraph: {
+      title: product!.name,
+      description: product!.short_description,
+      images: [product!.images[0].src],
+    },
+  };
+}
+
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = initialData.products.find((product) => product.slug === slug);
+  //const product = initialData.products.find((product) => product.slug === slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
-
+  //const product = products[0];
+  //console.log({product})
   return (
-    <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
+    <>
+      <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-2 gap-3">
+        {/* Slideshow */}
+        <div className="">
+          {/* Mobile Slideshow */}
+          <ProductMobileSlideshow
+            images={product.images}
+            className="block md:hidden"
+          />
 
+          {/* Desktop Slideshow */}
+          <ProductSlideshow
+            images={product.images}
+            className="hidden md:block"
+          />
+        </div>
 
-      {/* Slideshow */}
-      <div className="col-span-1 md:col-span-2">
-      
-        {/* Mobile Slideshow */}
-        <ProductMobileSlideshow images={product.images} className="block md:hidden" />
-        
-        {/* Desktop Slideshow */}
-        <ProductSlideshow images={product.images} className="hidden md:block" />
+        {/* Detalles */}
+        <div className="col-span-1 px-5">
+          <h1
+            className={`${titleFont.className} antialiased font-bold text-4xl mb-5`}
+          >
+            {product.name}
+          </h1>
+          <UpdatedProductDetails product={product} />
+        </div>
       </div>
-
-      {/* Detalles */}
-      <div className="col-span-1 px-5">
-        <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
-          {product.name}
-        </h1>
-        {/* Precio */}
-        <ProductPrice product={product} />
-
-        {/* Selector de Cantidad */}
-        {!product.sold_individually && <QuantitySelector />}
-
-        {/* Agregar al carro */}
-        <button className="btn-primary my-5">Agregar al Carro</button>
-
-        {/* Descripción */}
-        <h3 className="font-bold text-sm">Descripción</h3>
+      <div className="mb-5">
+        <h3 className="font-bold text-2xl text-center mb-5">Descripción</h3>
         <div
-          className="font-light text-sm"
-          dangerouslySetInnerHTML={{ __html: product.short_description }}
+          className="font-light"
+          dangerouslySetInnerHTML={{ __html: product.description }}
         />
       </div>
-    </div>
+    </>
   );
 }
