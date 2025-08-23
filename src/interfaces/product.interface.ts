@@ -87,6 +87,16 @@ export interface Product {
   };
 }
 
+interface Attribute {
+  id: number;
+  name: string;
+  slug: string;
+  position: number;
+  visible: boolean;
+  variation: boolean;
+  options: string[];
+}
+
 interface Category {
   id: number;
   name: string;
@@ -116,14 +126,19 @@ export interface Image {
   alt: string;
 }
 
-interface Attribute {
+export interface VariationAttribute {
   id: number;
   name: string;
-  slug: string;
-  position: number;
-  visible: boolean;
-  variation: boolean;
-  options: string[];
+  option: string;
+}
+
+export interface Variation {
+  id: number;
+  price: string;
+  price_html?: string;
+  stock_status: string;
+  image?: { src: string };
+  attributes: VariationAttribute[];
 }
 
 type Crud = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

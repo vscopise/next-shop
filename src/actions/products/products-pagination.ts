@@ -18,13 +18,13 @@ export async function getPaginatedProducts(
   const credentials = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
     "base64"
   );
-  
+
   const url = `${apiUrl}/products?page=${page}&per_page=${perPage}`;
 
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
 
-  const response = await fetch(`${url}/?page=${page}&per_page=${perPage}`, {
+  const response = await fetch(url, {
     headers: {
       Authorization: `Basic ${credentials}`,
       "Content-Type": "application/json",

@@ -37,7 +37,7 @@ async function getCategoryIdBySlug(slug: string): Promise<number | null> {
 }
 
 // Step 2: Fetch Products
-export async function getProductsBySlug(
+export async function getProductsByCategory(
   categorySlug: string,
   page: number = 1,
   perPage: number = 10
@@ -50,13 +50,15 @@ export async function getProductsBySlug(
 
   const url = `${apiUrl}/products?category=${categoryId}&page=${page}&per_page=${perPage}`;
 
+  console.log({url})
+
   const response = await fetch(url, {
     method: "GET",
     headers: {
       Authorization: getAuthHeader(),
       Accept: "application/json",
     },
-    next: { revalidate: 60 },
+    //next: { revalidate: 60 },
   });
 
   if (!response.ok) {

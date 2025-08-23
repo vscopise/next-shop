@@ -9,6 +9,7 @@ import {
   ProductStock,
   ProductPrice,
   ProductTags,
+  //ProductVariations,
 } from "@/components";
 
 interface Props {
@@ -53,11 +54,20 @@ export const UpdatedProductDetails = ({ product }: Props) => {
         <ProductStock product={updatedProduct!} />
       )}
       {/* Descripción */}
-      <h3 className="font-bold text-sm">Descripción</h3>
-      <div
-        className="font-light mb-3"
-        dangerouslySetInnerHTML={{ __html: product.short_description }}
-      />
+      {"" != product.short_description && (
+        <>
+          <h3 className="font-bold text-sm">Descripción</h3>
+          <div
+            className="font-light mb-3"
+            dangerouslySetInnerHTML={{ __html: product.short_description }}
+          />
+        </>
+      )}
+      {/* Variaciones */}
+      {product.type === "variable" ? <div>variable</div> : null}
+      {/* product.type === "variable" && (
+        <ProductVariations product={updatedProduct!} loading={loading} />
+      ) */}
       {/* Agregar al carro */}
       {loading ? (
         <div className="mb-3 bg-gray-200 animate-pulse">&nbsp;</div>

@@ -1,6 +1,6 @@
 export const revalidate = 60;
 
-import { getProductsBySlug } from "@/actions";
+import { getProductsByCategory } from "@/actions";
 import { Pagination, ProductGrid } from "@/components";
 import { getIntValue } from "@/utils";
 
@@ -14,7 +14,7 @@ export default async function CategoryPage({ params }: Props) {
   const actualPage = getIntValue(page, 1);
   const actualTake = getIntValue(take, 10);
 
-  const { products, totalPages } = await getProductsBySlug(
+  const { products, totalPages } = await getProductsByCategory(
     slug,
     actualPage,
     actualTake
