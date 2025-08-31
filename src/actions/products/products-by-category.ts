@@ -1,6 +1,6 @@
 "use server";
 
-import { Product } from "@/interfaces";
+import { Category, Product } from "@/interfaces";
 
 interface ProductsResponse {
   products: Product[];
@@ -19,7 +19,7 @@ function getAuthHeader(): string {
 }
 
 // Step 1: Fetch category ID by slug
-async function getCategoryIdBySlug(slug: string): Promise<number | null> {
+export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   const url = `${apiUrl}/products/categories?slug=${slug}`;
 
   const response = await fetch(url, {
@@ -33,7 +33,7 @@ async function getCategoryIdBySlug(slug: string): Promise<number | null> {
   if (!response.ok) return null;
 
   const data = await response.json();
-  return Array.isArray(data) && data.length > 0 ? data[0].id : null;
+  return Array.isArray(data) && data.length > 0 ? data[0] : null;
 }
 
 // Step 2: Fetch Products
@@ -42,15 +42,15 @@ export async function getProductsByCategory(
   page: number = 1,
   perPage: number = 10
 ): Promise<ProductsResponse> {
-  const categoryId = await getCategoryIdBySlug(categorySlug);
+  const category = await getCategoryBySlug(categorySlug);
 
-  if (!categoryId) {
+  if (!category) {
     return { products: [], totalPages: 0 };
   }
 
-  const url = `${apiUrl}/products?category=${categoryId}&page=${page}&per_page=${perPage}`;
+  const url = `${apiUrl}/products?category=${category.id}&page=${page}&per_page=${perPage}`;
 
-  console.log({url})
+  //console.log({url})
 
   const response = await fetch(url, {
     method: "GET",

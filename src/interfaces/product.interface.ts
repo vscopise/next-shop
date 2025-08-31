@@ -97,7 +97,7 @@ interface Attribute {
   options: string[];
 }
 
-interface Category {
+export interface Category {
   id: number;
   name: string;
   slug: string;
@@ -135,8 +135,11 @@ export interface VariationAttribute {
 export interface Variation {
   id: number;
   price: string;
+  regular_price: string;
+  sale_price: string;
   price_html?: string;
   stock_status: string;
+  stock_quantity: string;
   image?: { src: string };
   attributes: VariationAttribute[];
 }

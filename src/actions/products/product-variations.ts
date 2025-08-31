@@ -18,7 +18,7 @@ export async function getProductVariations(
 ): Promise<Variation[] | null> {
   const url = `${apiUrl}/products/${productId}/variations/`;
 
-  console.log({url})
+  //console.log({url})
 
   const response = await fetch(url, {
     method: "GET",

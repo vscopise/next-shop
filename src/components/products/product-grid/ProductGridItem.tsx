@@ -1,9 +1,10 @@
 "use client";
 
-import { Product } from "@/interfaces";
+import { getProductVariations } from "@/actions";
+import { Product, Variation } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   product: Product;
@@ -11,6 +12,35 @@ interface Props {
 
 export const ProductGridItem = ({ product }: Props) => {
   const [displayImage, setDisplayImage] = useState(product.images[0]);
+  const [variations, setVariations] = useState<Variation[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVariations = async () => {
+      try {
+        const variations = await getProductVariations(product.id);
+
+        if (null === variations)
+          throw new Error("Error al obtener las variaciones");
+
+        setVariations(variations);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchVariations();
+  }, [product.id]);
+
+  const prices = variations?.flatMap((v) =>
+    [Number(v.regular_price), Number(v.sale_price)].filter(
+      (n) => !isNaN(n) && n > 0
+    )
+  );
+  const minPrice = Math.min(...prices!);
+  const maxPrice = Math.max(...prices!);
+
   return (
     <div className="rounded-md overflow-hidden fade-in">
       <Link href={`/product/${product.slug}`}>
@@ -34,7 +64,25 @@ export const ProductGridItem = ({ product }: Props) => {
         <Link className="hover:text-blue-600" href={`/product/${product.slug}`}>
           {product.name}
         </Link>
-        <span className="font-bold">${product.price}</span>
+        <div className="flex gap-2">
+          {product.type === "simple" && product.on_sale && (
+            <>
+              <div className="font-bold">${product.sale_price}</div>
+              <div className="line-through text-gray-500">
+                ${product.regular_price}
+              </div>
+            </>
+          )}
+          {product.type === "simple" && !product.on_sale && (
+            <div className="font-bold">${product.regular_price}</div>
+          )}
+          {product.type === "variable" && loading && (
+            <div className="bg-gray-200 animate-pulse">&nbsp;</div>
+          )}
+          {product.type === "variable" && !loading && (
+            <div className="font-bold">{`$${minPrice} - $${maxPrice}`}</div>
+          )}
+        </div>
       </div>
     </div>
   );

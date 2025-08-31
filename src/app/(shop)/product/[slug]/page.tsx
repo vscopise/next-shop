@@ -6,7 +6,7 @@ import {
   ProductMobileSlideshow,
   //UpdatedProductDetails,
   ProductPrice,
-  ProductStock,
+  //ProductStock,
   //AddToCart,
   ProductCategories,
   ProductTags,
@@ -40,14 +40,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  //const product = initialData.products.find((product) => product.slug === slug);
   const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
-  //const product = products[0];
-  //console.log({product})
   return (
     <>
       <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -73,8 +70,8 @@ export default async function ProductPage({ params }: Props) {
           >
             {product.name}
           </h1>
+          {/* Precio */}
           <ProductPrice product={product} />
-          <ProductStock product={product} />
           {/* Descripción */}
           {"" != product.short_description && (
             <>
@@ -85,13 +82,9 @@ export default async function ProductPage({ params }: Props) {
               />
             </>
           )}
-          
           <AddToCart product={product} />
-          
           <ProductCategories product={product} />
           <ProductTags product={product} />
-
-          {/* <UpdatedProductDetails product={product} /> */}
         </div>
       </div>
       <div className="mb-5">

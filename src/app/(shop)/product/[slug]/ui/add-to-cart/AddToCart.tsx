@@ -14,7 +14,12 @@ export const AddToCart = ({ product }: Props) => {
 
   return (
     <>
-      <ProductVariations productId={product.id} />
+      {product.type === "variable" && (
+        <ProductVariations productId={product.id} />
+      )}
+      {product.type === "simple" && (
+        <div className="mb-5">Stock: {product.stock_quantity} disponibles</div>
+      )}
       <div className="flex items-center gap-4">
         {!product.sold_individually && (
           <QuantitySelector
@@ -22,7 +27,7 @@ export const AddToCart = ({ product }: Props) => {
             onQuantityChanged={setQuantity}
           />
         )}
-        <button className="btn-primary">Agregar al Carro</button>
+        <button className="btn-primary mt-3">Agregar al Carro</button>
       </div>
     </>
   );
