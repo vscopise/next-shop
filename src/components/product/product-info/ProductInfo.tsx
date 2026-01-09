@@ -47,6 +47,7 @@ export const ProductInfo = ({ product }: Props) => {
       >
         {name}
       </h1>
+      {loading && <div>cargando...</div>}
 
       <ProductPrice
         product={product}

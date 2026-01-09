@@ -45,7 +45,7 @@ export const UpdatedProductDetails = ({ product }: Props) => {
           &nbsp;
         </div>
       ) : (
-        <ProductPrice product={updatedProduct!} />
+        <ProductPrice product={updatedProduct!} variations={[]} />
       )}
       {/* Stock */}
       {loading ? (
