@@ -1,23 +1,23 @@
-'use client';
+"use client";
+
+import { Slide } from "@/interfaces";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
-import Image from "next/image";
 
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 
-import "./slider.css";
-import Link from "next/link";
-import { Slides } from "@/interfaces";
+import './slider.css';
+
+import { SlideItem } from "./SlideItem";
 
 interface Props {
-  slides: Slides[] | null;
+  slides: Slide[];
 }
 
 export const HeroSlider = ({ slides }: Props) => {
-  if (!slides) return;
 
   return (
     <div className="flex mb-12">
@@ -30,11 +30,9 @@ export const HeroSlider = ({ slides }: Props) => {
         }}
         className="hero-slider"
       >
-        {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <Link href={slide.link}>
-              <Image src={slide.image} alt="" width={1920} height={300} />
-            </Link>
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <SlideItem slide={slide} />
           </SwiperSlide>
         ))}
       </Swiper>

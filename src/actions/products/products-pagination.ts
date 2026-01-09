@@ -9,24 +9,25 @@ interface ProductsResponse {
 
 export async function getPaginatedProducts(
   page: number = 1,
-  perPage: number = 10
+  perPage: number = 10,
+  featured: boolean = false,
+  stock: string = 'instock'
 ): Promise<ProductsResponse> {
   const apiUrl = process.env.WC_API_URL!;
   const consumerKey = process.env.WC_CONSUMER_KEY!;
   const consumerSecret = process.env.WC_CONSUMER_SECRET!;
 
-  const credentials = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-    "base64"
-  );
 
-  const url = `${apiUrl}/products?page=${page}&per_page=${perPage}`;
+  let url = `${apiUrl}/products?page=${page}&per_page=${perPage}&stock_status=${stock}`;
+
+  if (!featured) url += '&featured=true'
 
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
 
   const response = await fetch(url, {
     headers: {
-      Authorization: `Basic ${credentials}`,
+      Authorization: `Basic ${btoa(`${consumerKey}:${consumerSecret}`)}`,
       "Content-Type": "application/json",
     },
   });

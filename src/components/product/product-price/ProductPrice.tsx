@@ -1,76 +1,63 @@
-import { getProductVariations } from "@/actions";
-import { Product } from "@/interfaces";
-import { clsx } from "clsx";
+import { Product, Variation } from "@/interfaces";
+import { getMinMaxPrice } from "@/utils";
+
 interface Props {
   product: Product;
+  variations: Variation[];
+  style?: string;
 }
 
-export const ProductPrice = async ({ product }: Props) => {
-  const regularPrice = Number(product.regular_price);
-  const salePrice = Number(product.sale_price);
+export const ProductPrice = ({ product, variations, style }: Props) => {
+  const { on_sale, price, sale_price, regular_price, type } = product;
 
-  switch (product.type) {
-    case "simple":
+  if ("" === price) return;
+
+  if ("simple" === type) {
+    if (on_sale) {
       return (
-        <Price
-          regularPrice={regularPrice}
-          salePrice={salePrice}
-          onSale={product.on_sale}
-        />
-      );
-
-    case "variable":
-      const variations = await getProductVariations(product.id);
-
-      const prices = variations?.flatMap((v) =>
-        [Number(v.regular_price), Number(v.sale_price)].filter(
-          (n) => !isNaN(n) && n > 0
-        )
-      );
-      const minPrice = Math.min(...prices!);
-      const maxPrice = Math.max(...prices!);
-
-      return (
-        <div className={clsx('mb-5 text-2xl',{'font-bold': minPrice === maxPrice})}>
-          {minPrice === maxPrice
-            ? `$${maxPrice}`
-            : `$${minPrice} - $${maxPrice}`}
+        <div className={`font-bold ${style}`}>
+          <div className="text-gray-400 line-through font-size[0.8em]">
+            <Currency />
+            {regular_price}
+          </div>
+          <div>
+            <Currency />
+            {sale_price}
+          </div>
         </div>
       );
+    }
 
-    case "grouped":
-      return <div>Grouped</div>;
-
-    case "external":
-      return <div>External</div>;
-  }
-};
-interface priceProps {
-  regularPrice: number;
-  salePrice: number;
-  onSale?: boolean;
-}
-const Price = ({ regularPrice, salePrice, onSale = false }: priceProps) => {
-  if (onSale) {
-    const discount = Math.round(
-      ((regularPrice - salePrice) / regularPrice) * 100
-    );
     return (
-      <div className="flex gap-2 mb-5 items-baseline">
-        <div className="font-bold text-2xl">${salePrice}</div>
-        <div className="text-gray-300 text-xl line-through">
-          ${regularPrice}
-        </div>
-        <div className="bg-red-100 rounded px-2 text-red-500 text-sm">
-          {discount}% DESC
-        </div>
+      <div className={`font-bold ${style}`}>
+        <Currency />
+        {price}
       </div>
     );
-  } else {
+  }
+
+  if ("variable" === type) {
+    const range = getMinMaxPrice(variations);
+
+    if (!range) return null;
+
+    if (range.min === range.max) {
+      return (
+        <div className={`font-bold ${style}`}>
+          <Currency />
+          {range.min}
+        </div>
+      );
+    }
+
     return (
-      <div className="flex mb-5">
-        <span className="text-2xl font-bold">${regularPrice}</span>
+      <div className={`font-bold ${style}`}>
+        <Currency />
+        {range.min} – <Currency />
+        {range.max}
       </div>
     );
   }
 };
+
+const Currency = () => <span className="font-semibold">$</span>;

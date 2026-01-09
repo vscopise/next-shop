@@ -5,18 +5,14 @@ import {
   ProductSlideshow,
   ProductMobileSlideshow,
   //UpdatedProductDetails,
-  ProductPrice,
   //ProductStock,
   //AddToCart,
-  ProductCategories,
-  ProductTags,
+  ProductInfo,
   //ProductVariations,
 } from "@/components";
-import { titleFont } from "@/config/fonts";
 import { Metadata } from "next";
 //import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
-import { AddToCart } from "./ui/add-to-cart/AddToCart";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -65,26 +61,7 @@ export default async function ProductPage({ params }: Props) {
 
         {/* Detalles */}
         <div className="col-span-1 px-5">
-          <h1
-            className={`${titleFont.className} antialiased font-bold text-4xl mb-5`}
-          >
-            {product.name}
-          </h1>
-          {/* Precio */}
-          <ProductPrice product={product} />
-          {/* Descripción */}
-          {"" != product.short_description && (
-            <>
-              <h3 className="font-bold text-sm">Descripción</h3>
-              <div
-                className="font-light mb-3"
-                dangerouslySetInnerHTML={{ __html: product.short_description }}
-              />
-            </>
-          )}
-          <AddToCart product={product} />
-          <ProductCategories product={product} />
-          <ProductTags product={product} />
+          <ProductInfo product={product} />
         </div>
       </div>
       <div className="mb-5">

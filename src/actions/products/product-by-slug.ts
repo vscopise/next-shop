@@ -7,7 +7,7 @@ import { Product } from "@/interfaces";
   product: Product;
 } */
 
-const apiUrl = process.env.WC_API_URL || '';
+const apiUrl = process.env.WP_API_URL || '';
 const consumerKey = process.env.WC_CONSUMER_KEY!;
 const consumerSecret = process.env.WC_CONSUMER_SECRET!;
 
@@ -19,7 +19,7 @@ function getAuthHeader(): string {
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const url = `${apiUrl}/products?slug=${slug}`;
+  const url = `${apiUrl}/wc/v3/products?slug=${slug}`;
 
   //  await sleep(3);
   const response = await fetch(url, {

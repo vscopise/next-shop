@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { geistMono, geistSans } from "@/config/fonts";
 
 import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -18,6 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <Script
+          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

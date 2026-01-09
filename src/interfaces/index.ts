@@ -1,2 +1,4 @@
 export * from './product.interface';
-export * from './slides.interface';
+export * from './slide.interface';
+export * from './media.interface';
+export * from './variation.interface';

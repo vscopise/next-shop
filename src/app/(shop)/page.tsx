@@ -1,32 +1,34 @@
 export const revalidate = 60;
 
 import { getHomeSlider, getPaginatedProducts } from "@/actions";
-import { Pagination, ProductGrid, HeroSlider } from "@/components";
+import { Pagination, ProductGrid, HeroSlider, AdManagerSlot } from "@/components";
 //import { titleFont } from "@/config/fonts";
-import { getIntValue } from "@/utils";
 
 interface Props {
-  searchParams: Promise<{ page: string; take: string }>;
+  searchParams: Promise<{ page: string; take: string; featured: string; }>;
 }
 
 export default async function Home({ searchParams }: Props) {
-  const { page, take } = await searchParams;
+  
+  const page = (await searchParams).page ? parseInt((await searchParams).page) : 1;
+  const take = (await searchParams).take ? parseInt((await searchParams).take) : 12;
+  const featured = (await searchParams).featured === 'true';
 
-  const actualPage = getIntValue(page, 1);
-  const actualTake = getIntValue(take, 10);
+  const { products, totalPages } = await getPaginatedProducts(page, take, featured, 'instock');
 
-  const { products, totalPages } = await getPaginatedProducts(
-    actualPage,
-    actualTake
-  );
-
-  const slides = await getHomeSlider();
+  const { ok, slides } = await getHomeSlider();
 
   return (
     <>
-      <HeroSlider slides={slides} />
+      {ok && <HeroSlider slides={slides!} />}
 
       <ProductGrid products={products} />
+
+      <AdManagerSlot adUnit="/100242293/1banner-en-home-940x100-5"
+        sizes={[
+          [940, 100], [728, 90],
+        ]}
+        divId="div-gpt-ad-1767998594977-0"/>
 
       <Pagination totalPages={totalPages} />
     </>

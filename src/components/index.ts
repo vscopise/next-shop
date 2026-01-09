@@ -9,6 +9,7 @@ export * from './product/add-to-cart/AddToCart';
 export * from './product/product-categories/ProductCategories';
 export * from './product/product-tags/ProductTags';
 export * from './product/product-variations/ProductVariations';
+export * from './product/product-info/ProductInfo';
 
 export * from './products/product-grid/ProductGrid';
 export * from './products/product-grid/ProductGridItem';
@@ -20,3 +21,4 @@ export * from './ui/sidebar/Sidebar';
 export * from './ui/top-menu/TopMenu';
 
 export * from './home/hero-slider/HeroSlider';
+export * from './ui/ad-manager-slot/AdManagerSlot';

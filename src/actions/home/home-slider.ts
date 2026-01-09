@@ -1,23 +1,24 @@
 "use server";
 
-import { Slides } from "@/interfaces";
+import { Slide } from "@/interfaces";
 
-const apiUrl = process.env.WP_API_URL!;
+interface SlidesResponse {
+  ok: boolean;
+  slides?: Slide[];
+}
 
+export async function getHomeSlider(): Promise<SlidesResponse> {
+  const apiUrl = process.env.WP_API_URL!;
+  const url = `${apiUrl}/hero-slider/v1/slides`;
 
+  const response = await fetch(url, { next: { revalidate: 60 } });
 
-export async function getHomeSlider():Promise<Slides[] | null> {
-  const url = `${apiUrl}/hero-slider`;
+  if (!response.ok) return { ok: false };
 
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  });
+  const slides = await response.json();
 
-  if (!response.ok) return null;
-
-  const data: Slides[] = await response.json();
-  return data.length > 0 ? data : null;
+  return {
+    ok: true,
+    slides: slides,
+  };
 }
