@@ -25,9 +25,7 @@ export default async function Home({ searchParams }: Props) {
       <ProductGrid products={products} />
 
       <AdSlot adUnit="/100242293/1banner-en-home-940x100-5"
-        sizes={[
-          [940, 100], [728, 90],
-        ]}
+        sizes={[ [940, 100], [728, 90] ]}
         divId="div-gpt-ad-1767998594977-0"/>
 
       <Pagination totalPages={totalPages} />
