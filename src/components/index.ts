@@ -21,4 +21,4 @@ export * from './ui/sidebar/Sidebar';
 export * from './ui/top-menu/TopMenu';
 
 export * from './home/hero-slider/HeroSlider';
-export * from './ui/ad-manager-slot/AdManagerSlot';
+export * from './ui/ad-slot/AdSlot';

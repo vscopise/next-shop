@@ -1,7 +1,7 @@
 export const revalidate = 60;
 
 import { getHomeSlider, getPaginatedProducts } from "@/actions";
-import { Pagination, ProductGrid, HeroSlider, AdManagerSlot } from "@/components";
+import { Pagination, ProductGrid, HeroSlider, AdSlot } from "@/components";
 //import { titleFont } from "@/config/fonts";
 
 interface Props {
@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: Props) {
 
       <ProductGrid products={products} />
 
-      <AdManagerSlot adUnit="/100242293/1banner-en-home-940x100-5"
+      <AdSlot adUnit="/100242293/1banner-en-home-940x100-5"
         sizes={[
           [940, 100], [728, 90],
         ]}
